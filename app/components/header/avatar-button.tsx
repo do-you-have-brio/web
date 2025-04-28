@@ -56,18 +56,6 @@ export function AvatarButton({ session }: { session: Session }) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href={"/teams"}>
-            <DropdownMenuItem>
-              <Users />
-              <span>Teams</span>
-            </DropdownMenuItem>
-          </Link>
-          <Link href={"/problems"}>
-            <DropdownMenuItem>
-              <ScrollText />
-              <span>Problems</span>
-            </DropdownMenuItem>
-          </Link>
           <Link href={"/contests"}>
             <DropdownMenuItem>
               <Trophy />
@@ -76,7 +64,7 @@ export function AvatarButton({ session }: { session: Session }) {
           </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <Link
+        <a
           target="_blank"
           rel="noopener"
           href="https://github.com/JuanIWK3/why-runner"
@@ -85,9 +73,9 @@ export function AvatarButton({ session }: { session: Session }) {
             <Github />
             <span>GitHub</span>
           </DropdownMenuItem>
-        </Link>
+        </a>
         <DropdownMenuSeparator />
-        <Link href="/api/auth/signout">
+        <Link to="/auth/logout">
           <DropdownMenuItem>
             <LogOut />
             <span>Log out</span>

@@ -15,6 +15,7 @@ import { Route as ProfileImport } from './routes/profile'
 import { Route as HistoryImport } from './routes/history'
 import { Route as IndexImport } from './routes/index'
 import { Route as AuthSigninImport } from './routes/auth/signin'
+import { Route as AuthLogoutImport } from './routes/auth/logout'
 
 // Create/Update Routes
 
@@ -39,6 +40,12 @@ const IndexRoute = IndexImport.update({
 const AuthSigninRoute = AuthSigninImport.update({
   id: '/auth/signin',
   path: '/auth/signin',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthLogoutRoute = AuthLogoutImport.update({
+  id: '/auth/logout',
+  path: '/auth/logout',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -67,6 +74,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileImport
       parentRoute: typeof rootRoute
     }
+    '/auth/logout': {
+      id: '/auth/logout'
+      path: '/auth/logout'
+      fullPath: '/auth/logout'
+      preLoaderRoute: typeof AuthLogoutImport
+      parentRoute: typeof rootRoute
+    }
     '/auth/signin': {
       id: '/auth/signin'
       path: '/auth/signin'
@@ -83,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/history': typeof HistoryRoute
   '/profile': typeof ProfileRoute
+  '/auth/logout': typeof AuthLogoutRoute
   '/auth/signin': typeof AuthSigninRoute
 }
 
@@ -90,6 +105,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/history': typeof HistoryRoute
   '/profile': typeof ProfileRoute
+  '/auth/logout': typeof AuthLogoutRoute
   '/auth/signin': typeof AuthSigninRoute
 }
 
@@ -98,15 +114,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/history': typeof HistoryRoute
   '/profile': typeof ProfileRoute
+  '/auth/logout': typeof AuthLogoutRoute
   '/auth/signin': typeof AuthSigninRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/history' | '/profile' | '/auth/signin'
+  fullPaths: '/' | '/history' | '/profile' | '/auth/logout' | '/auth/signin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/history' | '/profile' | '/auth/signin'
-  id: '__root__' | '/' | '/history' | '/profile' | '/auth/signin'
+  to: '/' | '/history' | '/profile' | '/auth/logout' | '/auth/signin'
+  id:
+    | '__root__'
+    | '/'
+    | '/history'
+    | '/profile'
+    | '/auth/logout'
+    | '/auth/signin'
   fileRoutesById: FileRoutesById
 }
 
@@ -114,6 +137,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HistoryRoute: typeof HistoryRoute
   ProfileRoute: typeof ProfileRoute
+  AuthLogoutRoute: typeof AuthLogoutRoute
   AuthSigninRoute: typeof AuthSigninRoute
 }
 
@@ -121,6 +145,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HistoryRoute: HistoryRoute,
   ProfileRoute: ProfileRoute,
+  AuthLogoutRoute: AuthLogoutRoute,
   AuthSigninRoute: AuthSigninRoute,
 }
 
@@ -137,6 +162,7 @@ export const routeTree = rootRoute
         "/",
         "/history",
         "/profile",
+        "/auth/logout",
         "/auth/signin"
       ]
     },
@@ -148,6 +174,9 @@ export const routeTree = rootRoute
     },
     "/profile": {
       "filePath": "profile.tsx"
+    },
+    "/auth/logout": {
+      "filePath": "auth/logout.tsx"
     },
     "/auth/signin": {
       "filePath": "auth/signin.tsx"
