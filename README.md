@@ -11,3 +11,9 @@ To run:
 ```bash
 bun dev
 ```
+
+## Running with Docker
+
+```bash
+docker compose up
+```
