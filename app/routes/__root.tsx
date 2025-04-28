@@ -8,6 +8,9 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "@/styles/app.css?url";
+import { Toaster } from "@/components/ui/sonner";
+import { Header } from "@/components/header/header";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -20,7 +23,7 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "Conversor",
+        title: "CV Analyzer",
       },
     ],
     links: [
@@ -47,9 +50,13 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       <head>
         <HeadContent />
       </head>
-      <body>
-        {children}
-        <Scripts />
+      <body className="min-h-screen flex flex-col justify-between">
+        <ThemeProvider>
+          <Header />
+          <main>{children}</main>
+          <Toaster />
+          <Scripts />
+        </ThemeProvider>
       </body>
     </html>
   );
