@@ -13,6 +13,9 @@ bun dev
 ```
 
 ## Running with Docker
+```bash
+docker build -t conversor-web .
+```
 
 ```bash
 docker compose up
