@@ -15,7 +15,7 @@ export function Header() {
   return (
     <header className="flex justify-between w-full items-center border-b p-4">
       <Link to={"/"}>
-        <h1 className="text-xl font-bold text-blue-600">Why Runner</h1>
+        <h1 className="text-xl font-bold text-blue-600">Curriculum Creator</h1>
       </Link>
       <div className="flex gap-4 ">
         {session ? (
