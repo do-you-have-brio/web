@@ -1,5 +1,6 @@
 services:
   web:
+    container_name: web
     build:
       context: ./web
       dockerfile: Dockerfile
@@ -11,3 +12,10 @@ services:
     image: n8nio/n8n
     ports:
       - "5678:5678"
+      
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
