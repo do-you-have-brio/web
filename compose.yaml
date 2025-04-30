@@ -5,3 +5,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+
+  n8n:
+    container_name: n8n
+    image: n8nio/n8n
+    ports:
+      - "5678:5678"
