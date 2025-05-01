@@ -1,12 +1,7 @@
 import { Hono } from "hono";
-import { z } from "zod";
+import { HTTPException } from "hono/http-exception";
 import { signinSchema, signupSchema } from "./auth.dto";
 import { AuthService } from "./auth.service";
-<<<<<<< Updated upstream
-=======
-import { HTTPException } from "hono/http-exception";
-import { sign, verify } from "hono/jwt";
->>>>>>> Stashed changes
 
 export const authRoutes = new Hono();
 
