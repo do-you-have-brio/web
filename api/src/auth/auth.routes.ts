@@ -1,5 +1,7 @@
 import { Hono } from "hono";
+import { env } from "hono/adapter";
 import { HTTPException } from "hono/http-exception";
+import type { Env } from "../env";
 import { signinSchema, signupSchema } from "./auth.dto";
 import { AuthService } from "./auth.service";
 
