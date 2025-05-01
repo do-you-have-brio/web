@@ -78,9 +78,12 @@ userRoutes.post("/educations", async (c) => {
 userRoutes.delete("/educations/:educationId", async (c) => {
   try {
     const { educationId } = c.req.param();
-    const { user } = c.get("jwtPayload");
+    const user = c.get("jwtPayload");
 
-    const updatedUser = await userService.removeEducation(user.id, educationId);
+    const updatedUser = await userService.removeEducation(
+      user.rest.id,
+      educationId,
+    );
 
     return c.json(updatedUser);
   } catch (error) {
@@ -114,5 +117,22 @@ userRoutes.post("/jobs", async (c) => {
     }
 
     return c.json({ error: error }, 500);
+  }
+});
+
+userRoutes.delete("/jobs/:jobId", async (c) => {
+  try {
+    const { jobId } = c.req.param();
+    const user = c.get("jwtPayload");
+
+    const updatedUser = await userService.removeJob(user.rest.id, jobId);
+
+    return c.json(updatedUser);
+  } catch (error) {
+    if (error instanceof HTTPException) {
+      return error.getResponse();
+    }
+
+    console.error(error);
   }
 });

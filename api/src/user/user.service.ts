@@ -129,4 +129,34 @@ export class UserService {
       },
     });
   }
+
+  async removeJob(userId: string, jobId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new HTTPException(404, { message: "User not found" });
+    }
+
+    const job = await prisma.job.findUnique({
+      where: { id: jobId },
+    });
+
+    if (!job) {
+      throw new HTTPException(404, { message: "Job not found" });
+    }
+
+    return await prisma.user.update({
+      where: { id: userId },
+      data: {
+        jobs: {
+          delete: { id: jobId },
+        },
+      },
+      include: {
+        jobs: true,
+      },
+    });
+  }
 }
