@@ -8,6 +8,6 @@ app.route("/auth", authRoutes);
 app.route("/cvs", cvsRoutes);
 
 export default {
-  fetch: app.fetch,
-  port: 4000,
+	fetch: app.fetch,
+	port: 4000,
 };

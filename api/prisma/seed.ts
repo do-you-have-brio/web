@@ -1,7 +1,7 @@
-import prisma from "../src/database/client";
+import prisma from "../src/database/client.ts";
 
 async function main() {
-	const user = await prisma.user.create({
+	const _user = await prisma.user.create({
 		data: {
 			email: "user@mail.com",
 			password: await Bun.password.hash("password"),
@@ -13,8 +13,7 @@ main()
 	.then(async () => {
 		await prisma.$disconnect();
 	})
-	.catch(async (e) => {
-		console.error(e);
+	.catch(async (_e) => {
 		await prisma.$disconnect();
 		process.exit(1);
 	});

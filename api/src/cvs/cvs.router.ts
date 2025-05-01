@@ -1,17 +1,16 @@
 import { Hono } from "hono";
 import { jwt } from "hono/jwt";
+import { env } from "../env";
 
 export const cvsRoutes = new Hono();
 
-const secret = process.env.SECRET_KEY!;
-
 cvsRoutes.use(
-	"*",
-	jwt({
-		secret,
-	}),
+  "*",
+  jwt({
+    secret: env.SECRET_KEY,
+  }),
 );
 
-cvsRoutes.get("/", async (c) => {
-	return c.text("nice");
+cvsRoutes.get("/", (c) => {
+  return c.text("nice");
 });

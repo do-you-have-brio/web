@@ -1,2 +1,1 @@
-export class CVService {
-
+export class CvsService {}
