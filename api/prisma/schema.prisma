@@ -12,11 +12,23 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
+
+  Education Education[]
+}
+
+model Education {
+  id         String  @id @default(uuid())
+  school     String
+  degree     String
+  location   String
+  start_date String
+  end_date   String
+  User       User?   @relation(fields: [userId], references: [id])
+  userId     String?
 }
