@@ -19,20 +19,22 @@ app.post("/signin", async (c) => {
     if (error instanceof z.ZodError) {
       return c.json({ error: error.issues }, 400);
     }
-    return c.text("Internal server error", 500);
+
+    return c.json({ error });
   }
 });
 
 app.post("/signup", async (c) => {
   try {
     const { email, password } = signupSchema.parse(await c.req.json());
-    const res = await authService.signup(email, password);
+    const res = await authService.signup({ email, password });
     return c.json({ token: res });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return c.json({ error: error.issues }, 400);
     }
-    return c.text("Internal server error", 500);
+
+    return c.json({ error });
   }
 });
 
