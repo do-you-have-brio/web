@@ -1,0 +1,105 @@
+{
+  "meta": {
+    "format": "httpie",
+    "version": "1.0.0",
+    "contentType": "workspace",
+    "schema": "https://schema.httpie.io/1.0.0.json",
+    "docs": "https://httpie.io/r/help/export-from-httpie",
+    "source": "HTTPie Desktop 2025.2.0"
+  },
+  "entry": {
+    "name": "curriculum",
+    "icon": {
+      "color": "gray",
+      "name": "default"
+    },
+    "collections": [
+      {
+        "name": "auth",
+        "icon": {
+          "name": "default",
+          "color": "gray"
+        },
+        "auth": {
+          "type": "none"
+        },
+        "requests": [
+          {
+            "name": "signin",
+            "url": "{{BASEURL}}/auth/signin",
+            "method": "POST",
+            "headers": [],
+            "queryParams": [],
+            "pathParams": [],
+            "auth": {
+              "type": "inherited"
+            },
+            "body": {
+              "type": "text",
+              "file": {
+                "name": ""
+              },
+              "text": {
+                "value": "{\n  \"email\":\"whowonbtw@gmail.com\",\n  \"name\": \"whowho\",\n  \"password\":\"btwbtwbtw\"\n}",
+                "format": "application/json"
+              },
+              "form": {
+                "isMultipart": false,
+                "fields": []
+              },
+              "graphql": {
+                "query": "",
+                "variables": ""
+              }
+            }
+          },
+          {
+            "name": "signup",
+            "url": "{{BASEURL}}/auth/signup",
+            "method": "POST",
+            "headers": [],
+            "queryParams": [],
+            "pathParams": [],
+            "auth": {
+              "type": "inherited"
+            },
+            "body": {
+              "type": "text",
+              "file": {
+                "name": ""
+              },
+              "text": {
+                "value": "{\n  \"email\":\"whowonbtw@gmail.com\",\n  \"name\": \"whowho\",\n  \"password\":\"btwbtwbtw\"\n}",
+                "format": "application/json"
+              },
+              "form": {
+                "isMultipart": false,
+                "fields": []
+              },
+              "graphql": {
+                "query": "",
+                "variables": ""
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "environments": [
+      {
+        "name": "Defaults",
+        "color": "gray",
+        "isDefault": true,
+        "isLocalOnly": false,
+        "variables": [
+          {
+            "name": "BASEURL",
+            "value": "http://localhost:4000",
+            "isSecret": false
+          }
+        ]
+      }
+    ],
+    "drafts": []
+  }
+}
