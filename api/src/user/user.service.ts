@@ -1,31 +1,31 @@
-import prisma from "../database/client";
 import { HTTPException } from "hono/http-exception";
-import { UpdateUserDto } from "./user.dto";
+import prisma from "../database/client";
+import type { UpdateUserDto } from "./user.dto";
 
 export class UserService {
-  constructor() {}
+	constructor() {}
 
-  async getUserById(id: string) {
-    const user = await prisma.user.findUnique({
-      where: { id },
-    });
+	async getUserById(id: string) {
+		const user = await prisma.user.findUnique({
+			where: { id },
+		});
 
-    if (!user) {
-      throw new HTTPException(404, { message: "User not found" });
-    }
+		if (!user) {
+			throw new HTTPException(404, { message: "User not found" });
+		}
 
-    return user;
-  }
+		return user;
+	}
 
-  async updateUser(id: string, data: UpdateUserDto) {
-    const user = await prisma.user.findUnique({
-      where: { id },
-    });
+	async updateUser(id: string, data: UpdateUserDto) {
+		const user = await prisma.user.findUnique({
+			where: { id },
+		});
 
-    if (!user) {
-      throw new HTTPException(404, { message: "User not found" });
-    }
+		if (!user) {
+			throw new HTTPException(404, { message: "User not found" });
+		}
 
-    return user;
-  }
+		return user;
+	}
 }

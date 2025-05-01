@@ -2,39 +2,40 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { signinSchema, signupSchema } from "./auth.dto";
 import { AuthService } from "./auth.service";
+<<<<<<< Updated upstream
+=======
+import { HTTPException } from "hono/http-exception";
+import { sign, verify } from "hono/jwt";
+>>>>>>> Stashed changes
 
-const app = new Hono();
+export const authRoutes = new Hono();
 
 const authService = new AuthService();
 
-app.post("/signin", async (c) => {
+authRoutes.post("/signin", async (c) => {
   try {
     const { email, password } = signinSchema.parse(await c.req.json());
 
     const res = await authService.signin({ email, password });
 
     return c.json({ token: res });
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return c.json({ error: error.issues }, 400);
+  } catch (err) {
+    if (err instanceof HTTPException) {
+      // Get the custom response
+      return err.getResponse();
     }
-
-    return c.json({ error });
   }
 });
 
-app.post("/signup", async (c) => {
+authRoutes.post("/signup", async (c) => {
   try {
     const { email, password } = signupSchema.parse(await c.req.json());
     const res = await authService.signup({ email, password });
     return c.json({ token: res });
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return c.json({ error: error.issues }, 400);
+  } catch (err) {
+    if (err instanceof HTTPException) {
+      // Get the custom response
+      return err.getResponse();
     }
-
-    return c.json({ error });
   }
 });
-
-export const authRoutes = app;
