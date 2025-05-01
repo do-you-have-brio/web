@@ -19,3 +19,13 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+
+  pg:
+    container_name: pg
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: analyzer
+    ports:
+      - "5432:5432"
