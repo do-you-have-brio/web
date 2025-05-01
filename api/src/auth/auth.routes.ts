@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { AuthService } from "./auth.service";
 import { signinSchema, signupSchema } from "./auth.dto";
+import { User } from "../generated/prisma";
 
 const app = new Hono();
 
