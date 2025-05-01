@@ -19,52 +19,29 @@ export class UserService {
     return user;
   }
 
-  async updateUser(id: string, data: UpdateUserDto) {
+  async updateUser(userId: string, data: UpdateUserDto) {
     const user = await prisma.user.findUnique({
-      where: { id },
+      where: { id: userId },
     });
 
     if (!user) {
       throw new HTTPException(404, { message: "User not found" });
     }
 
-    const education = data.education;
-
-    if (education.id) {
-      await prisma.education.update({
-        where: { id: education.id },
-        data: {
-          school: education.school,
-          degree: education.degree,
-          location: education.location,
-          start_date: education.start_date?.toISOString(),
-          end_date: education.end_date?.toISOString(),
+    return await prisma.user.update({
+      where: { id: userId },
+      data: {
+        educations: {
+          create: data.educations.create,
+          update: data.educations.update.map((ed) => ({
+            where: { id: ed.id },
+            data: ed,
+          })),
+          deleteMany: data.educations.delete.map((id) => ({ id })),
         },
-      });
-    } else {
-      const newEducation = CreateEducationSchema.safeParse(education);
-
-      if (!newEducation.success) {
-        throw new HTTPException(400, { message: "Invalid education data" });
-      }
-
-      const e = newEducation.data;
-
-      await prisma.education.create({
-        data: {
-          school: e.school,
-          degree: e.degree,
-          location: e.location,
-          start_date: e.start_date?.toISOString(),
-          end_date: e.end_date.toISOString(),
-        },
-      });
-    }
-
-    return prisma.user.findUnique({
-      where: { id },
+      },
       include: {
-        Education: true,
+        educations: true,
       },
     });
   }
@@ -72,7 +49,59 @@ export class UserService {
   async findAll() {
     return prisma.user.findMany({
       include: {
-        Education: true,
+        educations: true,
+      },
+    });
+  }
+
+  async addEducation(userId: string, data: CreateEducationDto) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new HTTPException(404, { message: "User not found" });
+    }
+
+    return await prisma.user.update({
+      where: { id: userId },
+      data: {
+        educations: {
+          create: data,
+        },
+      },
+      include: {
+        educations: true,
+      },
+    });
+  }
+
+  async removeEducation(userId: string, educationId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new HTTPException(404, { message: "User not found" });
+    }
+
+    const education = await prisma.education.findUnique({
+      where: { id: educationId },
+    });
+
+    if (!education) {
+      throw new HTTPException(404, { message: "Education not found" });
+    }
+
+    return await prisma.user.update({
+      where: { id: userId },
+      data: {
+        educations: {
+          delete: { id: educationId },
+        },
+      },
+      include: {
+        educations: true,
       },
     });
   }

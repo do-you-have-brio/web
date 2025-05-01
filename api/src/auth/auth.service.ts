@@ -1,9 +1,8 @@
 import { HTTPException } from "hono/http-exception";
 import { sign } from "hono/jwt";
-import type { Prisma } from "../../generated/prisma";
 import prisma from "../database/client";
-import type { SignInDto, SignUpDto } from "./auth.dto";
 import { env } from "../env";
+import type { SignInDto, SignUpDto } from "./auth.dto";
 
 export class AuthService {
   async signup(dto: SignInDto) {
