@@ -1,105 +1,161 @@
 {
-	"meta": {
-		"format": "httpie",
-		"version": "1.0.0",
-		"contentType": "workspace",
-		"schema": "https://schema.httpie.io/1.0.0.json",
-		"docs": "https://httpie.io/r/help/export-from-httpie",
-		"source": "HTTPie Desktop 2025.2.0"
-	},
-	"entry": {
-		"name": "curriculum",
-		"icon": {
-			"color": "gray",
-			"name": "default"
-		},
-		"collections": [
-			{
-				"name": "auth",
-				"icon": {
-					"name": "default",
-					"color": "gray"
-				},
-				"auth": {
-					"type": "none"
-				},
-				"requests": [
-					{
-						"name": "signin",
-						"url": "{{BASEURL}}/auth/signin",
-						"method": "POST",
-						"headers": [],
-						"queryParams": [],
-						"pathParams": [],
-						"auth": {
-							"type": "inherited"
-						},
-						"body": {
-							"type": "text",
-							"file": {
-								"name": ""
-							},
-							"text": {
-								"value": "{\n  \"email\":\"whowonbtw@gmail.com\",\n  \"name\": \"whowho\",\n  \"password\":\"btwbtwbtw\"\n}",
-								"format": "application/json"
-							},
-							"form": {
-								"isMultipart": false,
-								"fields": []
-							},
-							"graphql": {
-								"query": "",
-								"variables": ""
-							}
-						}
-					},
-					{
-						"name": "signup",
-						"url": "{{BASEURL}}/auth/signup",
-						"method": "POST",
-						"headers": [],
-						"queryParams": [],
-						"pathParams": [],
-						"auth": {
-							"type": "inherited"
-						},
-						"body": {
-							"type": "text",
-							"file": {
-								"name": ""
-							},
-							"text": {
-								"value": "{\n  \"email\":\"whowonbtw@gmail.com\",\n  \"name\": \"whowho\",\n  \"password\":\"btwbtwbtw\"\n}",
-								"format": "application/json"
-							},
-							"form": {
-								"isMultipart": false,
-								"fields": []
-							},
-							"graphql": {
-								"query": "",
-								"variables": ""
-							}
-						}
-					}
-				]
-			}
-		],
-		"environments": [
-			{
-				"name": "Defaults",
-				"color": "gray",
-				"isDefault": true,
-				"isLocalOnly": false,
-				"variables": [
-					{
-						"name": "BASEURL",
-						"value": "http://localhost:4000",
-						"isSecret": false
-					}
-				]
-			}
-		],
-		"drafts": []
-	}
+  "meta": {
+    "format": "httpie",
+    "version": "1.0.0",
+    "contentType": "workspace",
+    "schema": "https://schema.httpie.io/1.0.0.json",
+    "docs": "https://httpie.io/r/help/export-from-httpie",
+    "source": "HTTPie Desktop 2025.2.0"
+  },
+  "entry": {
+    "name": "curriculum",
+    "icon": {
+      "name": "default",
+      "color": "gray"
+    },
+    "collections": [
+      {
+        "name": "auth",
+        "icon": {
+          "name": "default",
+          "color": "gray"
+        },
+        "auth": {
+          "type": "bearer",
+          "target": "headers",
+          "credentials": {
+            "username": "",
+            "password": ""
+          }
+        },
+        "requests": [
+          {
+            "name": "signin",
+            "url": "{{BASEURL}}/auth/signin",
+            "method": "POST",
+            "headers": [],
+            "queryParams": [],
+            "pathParams": [],
+            "auth": {
+              "type": "inherited"
+            },
+            "body": {
+              "type": "text",
+              "file": {
+                "name": ""
+              },
+              "text": {
+                "value": "{\n  \"email\": \"whowonbtw@gmail.com\",\n  \"password\": \"btwbtwbtw\"\n}",
+                "format": "application/json"
+              },
+              "form": {
+                "isMultipart": false,
+                "fields": []
+              },
+              "graphql": {
+                "query": "",
+                "variables": ""
+              }
+            }
+          },
+          {
+            "name": "signup",
+            "url": "{{BASEURL}}/auth/signup",
+            "method": "POST",
+            "headers": [],
+            "queryParams": [],
+            "pathParams": [],
+            "auth": {
+              "type": "inherited"
+            },
+            "body": {
+              "type": "text",
+              "file": {
+                "name": ""
+              },
+              "text": {
+                "value": "{\n  \"email\":\"whowonbtw@gmail.com\",\n  \"password\":\"btwbtwbtw\"\n}",
+                "format": "application/json"
+              },
+              "form": {
+                "isMultipart": false,
+                "fields": []
+              },
+              "graphql": {
+                "query": "",
+                "variables": ""
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "cvs",
+        "icon": {
+          "name": "default",
+          "color": "gray"
+        },
+        "auth": {
+          "type": "bearer",
+          "target": "headers",
+          "credentials": {
+            "username": "",
+            "password": "{{Bearer}}"
+          }
+        },
+        "requests": [
+          {
+            "name": "find all",
+            "url": "{{BASEURL}}/cvs",
+            "method": "GET",
+            "headers": [],
+            "queryParams": [],
+            "pathParams": [],
+            "auth": {
+              "type": "inherited"
+            },
+            "body": {
+              "type": "none",
+              "file": {
+                "name": ""
+              },
+              "text": {
+                "value": "",
+                "format": "application/json"
+              },
+              "form": {
+                "isMultipart": false,
+                "fields": []
+              },
+              "graphql": {
+                "query": "",
+                "variables": ""
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "environments": [
+      {
+        "name": "Defaults",
+        "color": "gray",
+        "isDefault": true,
+        "isLocalOnly": false,
+        "variables": [
+          {
+            "name": "BASEURL",
+            "value": "http://localhost:4000",
+            "isSecret": false
+          },
+          {
+            "name": "Bearer",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiYzk0MzI4MmMtYzBhYS00YTJiLWFhNzUtZDE1MTAzNWQ5N2QxIiwiZW1haWwiOiJ3aG93b25idHdAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkYXJnb24yaWQkdj0xOSRtPTY1NTM2LHQ9MixwPTEkN3FuZTNxR3lXL0s0ZkFlSzFlSytiY291c3dlYi9uZXM4WkUxMk9ReEt5WSRwemxGNXpnOUh4YlFoQzk2MHg3V0NqMnJIWUFTSndpbGl2MTdPanNUa0xvIn19.x1SnhHlUKNmKlEOQkCKEtjNCHkvRA6rB1ZLFcrC5Mu0",
+            "isSecret": true
+          }
+        ]
+      }
+    ],
+    "drafts": []
+  }
 }
