@@ -4,6 +4,8 @@ import { HTTPException } from "hono/http-exception";
 import { CreateEducationSchema, UpdateUserSchema } from "./user.dto";
 import { jwt } from "hono/jwt";
 import { env } from "../env";
+import { User } from "../../generated/prisma";
+import { JWTPayload } from "hono/utils/jwt/types";
 
 export const userRoutes = new Hono();
 
@@ -53,13 +55,13 @@ userRoutes.patch("/:id", async (c) => {
   }
 });
 
-userRoutes.post("/:id/educations", async (c) => {
-  const { id } = c.req.param();
-
+userRoutes.post("/educations", async (c) => {
   try {
+    const { user } = c.get("jwtPayload");
+
     const body = CreateEducationSchema.parse(await c.req.json());
 
-    const updatedUser = await userService.addEducation(id, body);
+    const updatedUser = await userService.addEducation(user.id, body);
 
     return c.json(updatedUser);
   } catch (error) {
@@ -69,16 +71,19 @@ userRoutes.post("/:id/educations", async (c) => {
   }
 });
 
-userRoutes.delete("/:id/educations/:educationId", async (c) => {
-  const { id, educationId } = c.req.param();
-
+userRoutes.delete("/educations/:educationId", async (c) => {
   try {
-    const updatedUser = await userService.removeEducation(id, educationId);
+    const { educationId } = c.req.param();
+    const { user } = c.get("jwtPayload");
+
+    const updatedUser = await userService.removeEducation(user.id, educationId);
 
     return c.json(updatedUser);
   } catch (error) {
     if (error instanceof HTTPException) {
       return error.getResponse();
     }
+
+    console.error(error);
   }
 });

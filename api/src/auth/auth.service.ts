@@ -44,7 +44,9 @@ export class AuthService {
 
     if (!isPasswordValid) throw new Error("Invalid password");
 
-    const token = await sign({ user }, env.SECRET_KEY);
+    const { password, ...rest } = user;
+
+    const token = await sign({ rest }, env.SECRET_KEY);
 
     return token;
   }
