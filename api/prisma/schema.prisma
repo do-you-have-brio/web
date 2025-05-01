@@ -40,12 +40,12 @@ model Education {
 model Job {
   id          String   @id @default(uuid())
   title       String
-  description String
   company     String
   location    String
+  description String
+  tags        String[]
   start_date  DateTime
   end_date    DateTime
-  tags        String[]
   User        User?    @relation(fields: [userId], references: [id])
   userId      String?
 }

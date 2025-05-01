@@ -28,3 +28,15 @@ export const UpdateUserSchema = z.object({
 });
 
 export type UpdateUserDto = z.infer<typeof UpdateUserSchema>;
+
+export const CreateJobSchema = z.object({
+  title: z.string().min(2).max(100),
+  company: z.string().min(2).max(100),
+  location: z.string().min(2).max(100),
+  description: z.string().min(2).max(100),
+  tags: z.string().array().min(1).max(6),
+  start_date: z.string(),
+  end_date: z.string(),
+});
+
+export type CreateJobDto = z.infer<typeof CreateJobSchema>;

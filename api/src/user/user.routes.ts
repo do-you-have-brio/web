@@ -1,7 +1,11 @@
 import { Hono } from "hono";
 import { UserService } from "./user.service";
 import { HTTPException } from "hono/http-exception";
-import { CreateEducationSchema, UpdateUserSchema } from "./user.dto";
+import {
+  CreateEducationSchema,
+  UpdateUserSchema,
+  CreateJobSchema,
+} from "./user.dto";
 import { jwt } from "hono/jwt";
 import { env } from "../env";
 import { User } from "../../generated/prisma";
@@ -57,11 +61,11 @@ userRoutes.patch("/:id", async (c) => {
 
 userRoutes.post("/educations", async (c) => {
   try {
-    const { user } = c.get("jwtPayload");
+    const user = c.get("jwtPayload");
 
     const body = CreateEducationSchema.parse(await c.req.json());
 
-    const updatedUser = await userService.addEducation(user.id, body);
+    const updatedUser = await userService.addEducation(user.rest.id, body);
 
     return c.json(updatedUser);
   } catch (error) {
@@ -85,5 +89,30 @@ userRoutes.delete("/educations/:educationId", async (c) => {
     }
 
     console.error(error);
+  }
+});
+
+userRoutes.post("/jobs", async (c) => {
+  try {
+    const user = c.get("jwtPayload");
+
+    if (!user) {
+      return c.json({ error: "User not found" }, 404);
+    }
+
+    const body = CreateJobSchema.parse(await c.req.json());
+
+    const updatedUser = await userService.addJob(user.rest.id, body);
+
+    return c.json({
+      message: "Job added successfully",
+      updatedUser,
+    });
+  } catch (error) {
+    if (error instanceof HTTPException) {
+      return error.getResponse();
+    }
+
+    return c.json({ error: error }, 500);
   }
 });

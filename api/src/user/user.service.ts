@@ -1,6 +1,7 @@
 import { HTTPException } from "hono/http-exception";
 import prisma from "../database/client";
 import {
+  type CreateJobDto,
   type UpdateUserDto,
   type CreateEducationDto,
   CreateEducationSchema,
@@ -50,6 +51,7 @@ export class UserService {
     return prisma.user.findMany({
       include: {
         educations: true,
+        jobs: true,
       },
     });
   }
@@ -102,6 +104,28 @@ export class UserService {
       },
       include: {
         educations: true,
+      },
+    });
+  }
+
+  async addJob(userId: string, data: CreateJobDto) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new HTTPException(404, { message: "User not found" });
+    }
+
+    return await prisma.user.update({
+      where: { id: userId },
+      data: {
+        jobs: {
+          create: data,
+        },
+      },
+      include: {
+        jobs: true,
       },
     });
   }
