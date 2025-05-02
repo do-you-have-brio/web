@@ -18,9 +18,12 @@ authRoutes.post("/signin", async (c) => {
     return c.json({ token: res });
   } catch (err) {
     if (err instanceof HTTPException) {
-      // Get the custom response
-      return err.getResponse();
+      console.error(err);
+      return c.json(err);
     }
+
+    console.error(err);
+    return c.json({ message: err }, 500);
   }
 });
 
