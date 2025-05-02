@@ -6,12 +6,12 @@ export const cvsRoutes = new Hono();
 const secret = process.env.SECRET_KEY!;
 
 cvsRoutes.use(
-	"*",
-	jwt({
-		secret,
-	}),
+  "*",
+  jwt({
+    secret,
+  }),
 );
 
 cvsRoutes.get("/", async (c) => {
-	return c.text("nice");
+  return c.text("nice");
 });

@@ -1,9 +1,8 @@
 import { HTTPException } from "hono/http-exception";
 import { sign } from "hono/jwt";
-import type { Prisma } from "../../generated/prisma";
 import prisma from "../database/client";
-import type { SignInDto, SignUpDto } from "./auth.dto";
 import { env } from "../env";
+import type { SignInDto, SignUpDto } from "./auth.dto";
 
 export class AuthService {
   async signup(dto: SignInDto) {
@@ -45,7 +44,9 @@ export class AuthService {
 
     if (!isPasswordValid) throw new Error("Invalid password");
 
-    const token = await sign({ user }, env.SECRET_KEY);
+    const { password, ...rest } = user;
+
+    const token = await sign({ rest }, env.SECRET_KEY);
 
     return token;
   }
