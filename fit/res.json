@@ -1,0 +1,13 @@
+{
+  "match": 85,
+  "missingSkills": [
+    "Node.js",
+    "PHP",
+    "Relational Databases",
+    "Non-Relational Databases",
+    "Git",
+    "Automated Testing",
+    "Agile Methodologies"
+  ],
+  "summary": "The candidate demonstrates a strong fit for the job description, particularly in frontend development with React and TypeScript. Their project and work experience align well with the required skills. The candidate would benefit from experience with backend technologies like Node.js or PHP, databases, version control systems like Git, automated testing, and agile methodologies."
+}

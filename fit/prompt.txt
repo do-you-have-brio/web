@@ -1,0 +1,18 @@
+
+  You are an AI assistant helping to match candidates to job descriptions.
+
+  User profile:
+  Education: [{"id":"1","school":"University of California, Berkeley","location":"Berkeley, CA","degree":"Bachelor of Science in Computer Science","start_date":"2025-05-01T18:57:00.306Z","end_date":"2028-05-01T18:57:00.306Z"}]
+  Experience: [{"id":"1","title":"Frontend Developer","company":"TechCorp","location":"San Francisco, CA","description":"Develop and maintain frontend applications using React and TypeScript.","tags":["typescript","react","tailwind"],"start_date":"2022-01-01","end_date":"2022-12-31"}]
+  Projects: [{"id":"1","url":"https://github.com/whowon2/heuristic-game","name":"Heuristic Game","tags":["typescript","nextjs","react","tailwind"],"description":"A game where you use heuristics of UI design to solve real problems"}]
+
+  Job description:
+  Atuar como desenvolvedor de software em um time que está em constante evolução, participando da construção e melhoria de soluções que impactam diretamente o dia a dia dos nossos clientes. Essa pessoa vai entrar em um ambiente colaborativo e com desafios técnicos diversos, contribuindo com entregas que fazem a diferença e aprendendo constantemente com o time. Responsabilidades e atribuições Atuar no desenvolvimento e manutenção de sistemas web, com foco tanto em backend quanto em frontend; Participar de discussões técnicas e de produto junto ao time, ajudando a transformar ideias em soluções reais; Escrever código limpo, testável e alinhado às boas práticas do time; Realizar testes unitários e ajudar a garantir a qualidade das entregas; e Contribuir para a evolução técnica do time, propondo melhorias e aprendendo com os colegas. Requisitos e qualificações Conhecimento em JavaScript/TypeScript; Noções de frameworks modernos de frontend (React, Angular e/ou Vue); Noções de desenvolvimento backend com Node.js e/ou PHP Familiaridade com banco de dados relacionais e não relacionais; e Entendimento de APIs REST. Requisitos desejáveis Experiência com Git e versionamento de código; Noções de testes automatizados; e Conhecimento em metodologias ágeis (Scrum ou Kanban).
+
+  Analyze the fit between this profile and job. Respond with a JSON like:
+  {
+    "match": %,
+    "missingSkills": [...],
+    "summary": "short explanation"
+  }
+  
