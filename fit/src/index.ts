@@ -1,11 +1,20 @@
+import { GoogleGenAI } from "@google/genai";
+import { write } from "bun";
 import { Hono } from "hono";
-import { logger } from "hono/logger";
 import { cors } from "hono/cors";
-import { z, ZodError } from "zod";
+import { logger } from "hono/logger";
 import { OpenAI } from "openai";
+import { z, ZodError } from "zod";
+
+const envSchema = z.object({
+  API_KEY: z.string().min(1),
+});
+
+const env = envSchema.parse(process.env);
+
+const ai = new GoogleGenAI({ apiKey: env.API_KEY });
 
 const app = new Hono();
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 app.use(logger());
 app.use(cors({ origin: "*" }));
@@ -44,27 +53,24 @@ app.post("/analyze", async (c) => {
   }
   `;
 
-    const completion = await openai.chat.completions.create({
-      messages: [{ role: "user", content: prompt }],
-      model: "gpt-4.1-nano",
-      temperature: 0.3,
+    write("prompt.txt", prompt);
+
+    const completion = await ai.models.generateContent({
+      model: "gemini-2.0-flash",
+      contents: prompt,
     });
 
-    const result = completion.choices[0].message.content;
+    console.log(completion);
 
-    if (!result) {
-      return c.json({ error: "No response from OpenAI" }, 500);
+    return c.json(completion);
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return c.json({ error: error.errors }, 400);
     }
 
-    const parsedResult = JSON.parse(result);
+    console.error(error);
 
-    return c.json({ data: parsedResult }, 200);
-  } catch (err) {
-    if (err instanceof ZodError) {
-      return c.json({ error: err.errors }, 400);
-    }
-
-    return c.json({ error: "Invalid request body" }, 400);
+    return c.json({ error: error }, 400);
   }
 });
 
