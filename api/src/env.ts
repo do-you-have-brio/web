@@ -1,4 +1,3 @@
-import type { Context } from "hono";
 import { z } from "zod";
 
 export const envSchema = z.object({

@@ -1,0 +1,30 @@
+name: API Lint
+
+on:
+  push:
+    paths:
+      - "api/**"
+  pull_request:
+    paths:
+      - "api/**"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest # or pin to a version like "1.1.0"
+
+      - name: Install dependencies with Bun
+        run: bun install
+
+      - name: Run Biome Lint
+        run: bunx @biomejs/biome check . --apply

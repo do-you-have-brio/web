@@ -35,14 +35,18 @@ export class AuthService {
       },
     });
 
-    if (!user) throw new HTTPException(404, { message: "User not found" });
+    if (!user) {
+      throw new HTTPException(404, { message: "User not found" });
+    }
 
     const isPasswordValid = await Bun.password.verify(
       dto.password,
       user.password,
     );
 
-    if (!isPasswordValid) throw new Error("Invalid password");
+    if (!isPasswordValid) {
+      throw new Error("Invalid password");
+    }
 
     const { password, ...rest } = user;
 

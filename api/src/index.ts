@@ -1,8 +1,8 @@
 import { Hono } from "hono";
+import { logger } from "hono/logger";
 import { authRoutes } from "./auth/auth.routes";
 import { cvsRoutes } from "./cvs/cvs.router";
 import { userRoutes } from "./user/user.routes";
-import { logger } from "hono/logger";
 
 const app = new Hono();
 

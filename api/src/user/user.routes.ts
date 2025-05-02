@@ -1,11 +1,9 @@
 import { Hono } from "hono";
-import { UserService } from "./user.service";
 import { HTTPException } from "hono/http-exception";
-import { CreateEducationSchema, UpdateUserSchema } from "./user.dto";
 import { jwt } from "hono/jwt";
 import { env } from "../env";
-import { User } from "../../generated/prisma";
-import { JWTPayload } from "hono/utils/jwt/types";
+import { CreateEducationSchema, UpdateUserSchema } from "./user.dto";
+import { UserService } from "./user.service";
 
 export const userRoutes = new Hono();
 
@@ -48,7 +46,6 @@ userRoutes.patch("/:id", async (c) => {
     const updatedUser = await userService.updateUser(id, body);
     return c.json(updatedUser);
   } catch (error) {
-    console.log(error);
     if (error instanceof HTTPException) {
       return error.getResponse();
     }
@@ -84,6 +81,6 @@ userRoutes.delete("/educations/:educationId", async (c) => {
       return error.getResponse();
     }
 
-    console.error(error);
+    return c.json({ message: error }, 500);
   }
 });
