@@ -7,10 +7,10 @@ export const cvsRoutes = new Hono();
 cvsRoutes.use(
   "*",
   jwt({
-    secret: env.SECRET_KEY,
+    secret,
   }),
 );
 
-cvsRoutes.get("/", (c) => {
+cvsRoutes.get("/", async (c) => {
   return c.text("nice");
 });

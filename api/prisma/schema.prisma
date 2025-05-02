@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["debian-openssl-1.1.x", "debian-openssl-3.0.x"]
   output   = "../generated/prisma"
 }
 
@@ -19,7 +20,10 @@ model User {
   email    String @unique
   password String
 
-  Education Education[]
+  educations Education[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Education {
@@ -27,8 +31,8 @@ model Education {
   school     String
   degree     String
   location   String
-  start_date String
-  end_date   String
+  start_date DateTime
+  end_date   DateTime
   User       User?   @relation(fields: [userId], references: [id])
   userId     String?
 }

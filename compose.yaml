@@ -7,12 +7,33 @@ services:
     ports:
       - "3000:3000"
 
+  api:
+    container_name: api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    env_file: ./api/.env
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@pg:5432/analyzer
+    depends_on:
+      - pg
+
+  fit:
+    container_name: fit
+    build:
+      context: ./fit
+      dockerfile: Dockerfile
+    ports:
+      - "4001:4001"
+
   n8n:
     container_name: n8n
     image: n8nio/n8n
     ports:
       - "5678:5678"
-      
+
   rabbitmq:
     container_name: rabbitmq
     image: rabbitmq:3-management
@@ -29,3 +50,8 @@ services:
       POSTGRES_DB: analyzer
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
