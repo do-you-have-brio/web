@@ -27,4 +27,4 @@ jobs:
         run: bun install
 
       - name: Run Biome Lint
-        run: bunx @biomejs/biome check .
+        run: bunx @biomejs/biome check . --apply
