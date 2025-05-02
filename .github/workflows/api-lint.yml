@@ -23,8 +23,14 @@ jobs:
         with:
           bun-version: latest # or pin to a version like "1.1.0"
 
+      - name: Set up Biome
+        uses: biomejs/setup-biome@v2
+
       - name: Install dependencies with Bun
         run: bun install
 
       - name: Run Biome Lint
-        run: bunx @biomejs/biome check . --apply
+        run: bun run lint
+
+      - name: Build
+        run: bun run build

@@ -1,6 +1,6 @@
 import { HTTPException } from "hono/http-exception";
 import { sign } from "hono/jwt";
-import prisma from "../database/client";
+import { prisma } from "../database/client";
 import { env } from "../env";
 import type { SignInDto, SignUpDto } from "./auth.dto";
 

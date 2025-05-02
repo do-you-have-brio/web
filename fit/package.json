@@ -1,7 +1,9 @@
 {
   "name": "fit",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.ts",
+    "lint": "biome check . --write",
+    "build": "bun build src/index.ts --outdir dist"
   },
   "dependencies": {
     "hono": "^4.7.8",
