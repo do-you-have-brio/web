@@ -1,89 +1,104 @@
-import { Hono } from "hono";
-import { UserService } from "./user.service";
 import { HTTPException } from "hono/http-exception";
-import { CreateEducationSchema, UpdateUserSchema } from "./user.dto";
-import { jwt } from "hono/jwt";
-import { env } from "../env";
-import { User } from "../../generated/prisma";
-import { JWTPayload } from "hono/utils/jwt/types";
+import { prisma } from "../database/client";
+import type { CreateEducationDto, UpdateUserDto } from "./user.dto";
 
-export const userRoutes = new Hono();
+export class UserService {
+  async findById(id: string) {
+    const user = await prisma.user.findUnique({
+      where: { id },
+    });
 
-const userService = new UserService();
-
-userRoutes.use(
-  "*",
-  jwt({
-    secret: env.SECRET_KEY,
-  }),
-);
-
-userRoutes.get("/", async (c) => {
-  try {
-    const users = await userService.findAll();
-    return c.json(users);
-  } catch (error) {
-    if (error instanceof HTTPException) {
-      return error.getResponse();
-    }
-  }
-});
-
-userRoutes.get("/:id", async (c) => {
-  const { id } = c.req.param();
-  try {
-    const user = await userService.findById(id);
-    return c.json(user);
-  } catch (error) {
-    if (error instanceof HTTPException) {
-      return error.getResponse();
-    }
-  }
-});
-
-userRoutes.patch("/:id", async (c) => {
-  const { id } = c.req.param();
-  const body = UpdateUserSchema.parse(await c.req.json());
-  try {
-    const updatedUser = await userService.updateUser(id, body);
-    return c.json(updatedUser);
-  } catch (error) {
-    console.log(error);
-    if (error instanceof HTTPException) {
-      return error.getResponse();
-    }
-  }
-});
-
-userRoutes.post("/educations", async (c) => {
-  try {
-    const { user } = c.get("jwtPayload");
-
-    const body = CreateEducationSchema.parse(await c.req.json());
-
-    const updatedUser = await userService.addEducation(user.id, body);
-
-    return c.json(updatedUser);
-  } catch (error) {
-    if (error instanceof HTTPException) {
-      return error.getResponse();
-    }
-  }
-});
-
-userRoutes.delete("/educations/:educationId", async (c) => {
-  try {
-    const { educationId } = c.req.param();
-    const { user } = c.get("jwtPayload");
-
-    const updatedUser = await userService.removeEducation(user.id, educationId);
-
-    return c.json(updatedUser);
-  } catch (error) {
-    if (error instanceof HTTPException) {
-      return error.getResponse();
+    if (!user) {
+      throw new HTTPException(404, { message: "User not found" });
     }
 
-    console.error(error);
+    return user;
   }
-});
+
+  async updateUser(userId: string, data: UpdateUserDto) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new HTTPException(404, { message: "User not found" });
+    }
+
+    return await prisma.user.update({
+      where: { id: userId },
+      data: {
+        educations: {
+          create: data.educations.create,
+          update: data.educations.update.map((ed) => ({
+            where: { id: ed.id },
+            data: ed,
+          })),
+          deleteMany: data.educations.delete.map((id) => ({ id })),
+        },
+      },
+      include: {
+        educations: true,
+      },
+    });
+  }
+
+  async findAll() {
+    return await prisma.user.findMany({
+      include: {
+        educations: true,
+      },
+    });
+  }
+
+  async addEducation(userId: string, data: CreateEducationDto) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new HTTPException(404, { message: "User not found" });
+    }
+
+    return await prisma.user.update({
+      where: { id: userId },
+      data: {
+        educations: {
+          create: data,
+        },
+      },
+      include: {
+        educations: true,
+      },
+    });
+  }
+
+  async removeEducation(userId: string, educationId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new HTTPException(404, { message: "User not found" });
+    }
+
+    const education = await prisma.education.findUnique({
+      where: { id: educationId },
+    });
+
+    if (!education) {
+      throw new HTTPException(404, { message: "Education not found" });
+    }
+
+    return await prisma.user.update({
+      where: { id: userId },
+      data: {
+        educations: {
+          delete: { id: educationId },
+        },
+      },
+      include: {
+        educations: true,
+      },
+    });
+  }
+}

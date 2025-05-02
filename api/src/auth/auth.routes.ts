@@ -16,11 +16,9 @@ authRoutes.post("/signin", async (c) => {
     return c.json({ token: res });
   } catch (err) {
     if (err instanceof HTTPException) {
-      console.error(err);
-      return c.json(err);
+      return c.json(err.getResponse());
     }
 
-    console.error(err);
     return c.json({ message: err }, 500);
   }
 });

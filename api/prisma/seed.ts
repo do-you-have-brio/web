@@ -8,7 +8,7 @@ async function main() {
     },
   });
 
-  const update = await prisma.user.update({
+  const _update = await prisma.user.update({
     where: {
       id: user.id,
     },
@@ -32,9 +32,7 @@ main()
   .then(async () => {
     await prisma.$disconnect();
   })
-  .catch(async (e) => {
-    console.error(e);
+  .catch(async () => {
     await prisma.$disconnect();
     process.exit(1);
   });
-  .catch(async (_e) => {

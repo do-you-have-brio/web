@@ -61,7 +61,6 @@ app.post("/analyze", async (c) => {
     return c.json({ data: parsedResult }, 200);
   } catch (err) {
     if (err instanceof ZodError) {
-      console.error(err);
       return c.json({ error: err.errors }, 400);
     }
 

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "bun run --hot src/index.ts",
     "postinstall": "prisma generate",
-    "lint": "biome check ."
+    "lint": "biome check . --write"
   },
   "dependencies": {
     "@prisma/client": "^6.7.0",
