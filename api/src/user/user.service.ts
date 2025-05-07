@@ -1,4 +1,11 @@
 import { HTTPException } from "hono/http-exception";
+import prisma from "../database/client";
+import {
+  type CreateJobDto,
+  type UpdateUserDto,
+  type CreateEducationDto,
+  CreateEducationSchema,
+} from "./user.dto";
 import { prisma } from "../database/client";
 import type { CreateEducationDto, UpdateUserDto } from "./user.dto";
 
@@ -46,6 +53,7 @@ export class UserService {
     return await prisma.user.findMany({
       include: {
         educations: true,
+        jobs: true,
       },
     });
   }
@@ -98,6 +106,58 @@ export class UserService {
       },
       include: {
         educations: true,
+      },
+    });
+  }
+
+  async addJob(userId: string, data: CreateJobDto) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new HTTPException(404, { message: "User not found" });
+    }
+
+    return await prisma.user.update({
+      where: { id: userId },
+      data: {
+        jobs: {
+          create: data,
+        },
+      },
+      include: {
+        jobs: true,
+      },
+    });
+  }
+
+  async removeJob(userId: string, jobId: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new HTTPException(404, { message: "User not found" });
+    }
+
+    const job = await prisma.job.findUnique({
+      where: { id: jobId },
+    });
+
+    if (!job) {
+      throw new HTTPException(404, { message: "Job not found" });
+    }
+
+    return await prisma.user.update({
+      where: { id: userId },
+      data: {
+        jobs: {
+          delete: { id: jobId },
+        },
+      },
+      include: {
+        jobs: true,
       },
     });
   }

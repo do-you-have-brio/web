@@ -24,6 +24,20 @@ async function main() {
           },
         ],
       },
+      jobs: {
+        create: [
+          {
+            title: "Frontend Developer",
+            company: "TechCorp",
+            location: "San Francisco, CA",
+            description:
+              "Develop and maintain frontend applications using React and TypeScript.",
+            tags: ["typescript", "react", "tailwind"],
+            start_date: new Date("2025-05-01T18:57:00.306Z"),
+            end_date: new Date("2028-05-01T18:57:00.306Z"),
+          },
+        ],
+      },
     },
   });
 }
