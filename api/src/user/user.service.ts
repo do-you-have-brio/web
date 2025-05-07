@@ -6,6 +6,8 @@ import {
   type CreateEducationDto,
   CreateEducationSchema,
 } from "./user.dto";
+import { prisma } from "../database/client";
+import type { CreateEducationDto, UpdateUserDto } from "./user.dto";
 
 export class UserService {
   async findById(id: string) {
@@ -48,7 +50,7 @@ export class UserService {
   }
 
   async findAll() {
-    return prisma.user.findMany({
+    return await prisma.user.findMany({
       include: {
         educations: true,
         jobs: true,

@@ -1,0 +1,36 @@
+name: Fit Lint
+
+on:
+  push:
+    paths:
+      - "fit/**"
+  pull_request:
+    paths:
+      - "fit/**"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: fit
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest # or pin to a version like "1.1.0"
+
+      - name: Set up Biome
+        uses: biomejs/setup-biome@v2
+
+      - name: Install dependencies with Bun
+        run: bun install
+
+      - name: Run Biome Lint
+        run: bun run lint
+
+      - name: Build
+        run: bun run build

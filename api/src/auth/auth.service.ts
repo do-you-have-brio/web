@@ -1,6 +1,6 @@
 import { HTTPException } from "hono/http-exception";
 import { sign } from "hono/jwt";
-import prisma from "../database/client";
+import { prisma } from "../database/client";
 import { env } from "../env";
 import type { SignInDto, SignUpDto } from "./auth.dto";
 
@@ -35,14 +35,18 @@ export class AuthService {
       },
     });
 
-    if (!user) throw new HTTPException(404, { message: "User not found" });
+    if (!user) {
+      throw new HTTPException(404, { message: "User not found" });
+    }
 
     const isPasswordValid = await Bun.password.verify(
       dto.password,
       user.password,
     );
 
-    if (!isPasswordValid) throw new Error("Invalid password");
+    if (!isPasswordValid) {
+      throw new Error("Invalid password");
+    }
 
     const { password, ...rest } = user;
 
