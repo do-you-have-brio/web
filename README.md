@@ -18,7 +18,7 @@ Interface web para interação com o sistema.
 Tecnologias utilizadas:
 Frontend: React
 
-Backend: Java (Spring Boot) com microserviços
+Backend: Node.js com microserviços
 
 Comunicação: RabbitMQ
 
