@@ -55,7 +55,7 @@ Serviço de análise extrai os requisitos da vaga.
 
 Serviço de comparação avalia a compatibilidade com o perfil.
 
-![Alt text](Captura de tela de 2025-05-08 22-13-13.png)
+![diagram](./diagram.png)
 
 Sistema mostra a pontuação e recomendações.
 
