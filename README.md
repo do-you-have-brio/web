@@ -55,10 +55,10 @@ Serviço de análise extrai os requisitos da vaga.
 
 Serviço de comparação avalia a compatibilidade com o perfil.
 
-![diagram](./diagram.png)
-
 Sistema mostra a pontuação e recomendações.
 
 Se o usuário quiser, o sistema gera um currículo personalizado.
 
 Usuário faz o download do currículo em PDF.
+
+![diagram](./dia.png)
