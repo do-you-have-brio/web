@@ -63,4 +63,5 @@ Se o usuário quiser, o sistema gera um currículo personalizado.
 
 Usuário faz o download do currículo em PDF.
 
-![diagram](./dia.png)
+![dia](https://github.com/user-attachments/assets/086f15cb-763f-4ea2-aae3-32aad01d0273)
+
