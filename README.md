@@ -26,6 +26,7 @@ Deploy: Docker e Docker Compose
 
 ## 📋 Requisitos do Sistema
 Requisitos Funcionais (RF):
+
 RF01 – O sistema deve permitir que o usuário cadastre seu perfil profissional.
 
 RF02 – O sistema deve permitir o envio de uma descrição de vaga.
@@ -47,6 +48,7 @@ RNF04 – A interface deve ser responsiva e acessível.
 
 ## 🔄 Modelos de Processo
 Modelo de Entrada e Fluxo:
+
 Usuário cadastra seu perfil profissional.
 
 Usuário envia a vaga desejada (descrição textual).
