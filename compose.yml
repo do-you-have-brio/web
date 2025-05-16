@@ -23,6 +23,14 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:postgres@db:5432/db
 
+  fit-ai:
+    container_name: cv-fit-ai
+    build:
+      context: .
+      dockerfile: ./apps/fit-ai/Dockerfile
+    ports:
+      - "4002:4002"
+
   db:
     container_name: cv-db
     image: postgres
