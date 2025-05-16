@@ -1,0 +1,13 @@
+{
+	"name": "fit-ai",
+	"scripts": {
+		"dev": "bun run --hot src/index.ts"
+	},
+	"dependencies": {
+		"@google/genai": "^0.14.1",
+		"hono": "^4.7.9"
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	}
+}

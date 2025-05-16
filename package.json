@@ -1,0 +1,12 @@
+{
+	"name": "fodase",
+	"dependencies": {
+		"@prisma/client": "^6.8.2"
+	},
+	"devDependencies": {
+		"@types/bun": "latest",
+		"prisma": "^6.8.2",
+		"nx": "21.0.2"
+	},
+	"workspaces": ["apps/*"]
+}
