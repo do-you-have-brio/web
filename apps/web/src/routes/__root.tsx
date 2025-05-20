@@ -1,3 +1,5 @@
+import { Header } from "@/components/header";
+import appCss from "@/styles/app.css?url";
 import {
 	HeadContent,
 	Outlet,
@@ -6,7 +8,6 @@ import {
 } from "@tanstack/react-router";
 // app/routes/__root.tsx
 import type { ReactNode } from "react";
-import appCss from "~/styles/app.css?url";
 
 export const Route = createRootRoute({
 	head: () => ({
@@ -47,6 +48,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
 				<HeadContent />
 			</head>
 			<body>
+				<Header />
 				{children}
 				<Scripts />
 			</body>
