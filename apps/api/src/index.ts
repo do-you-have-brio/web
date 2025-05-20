@@ -1,15 +1,18 @@
-import { PrismaClient } from "@prisma/client";
 import { Hono } from "hono";
-
-const prisma = new PrismaClient();
+import { logger } from "hono/logger";
+import { authRoutes } from "./auth.routes";
+import { cvsRoutes } from "./cvs/cvs.router";
+import { userRoutes } from "./user/user.routes";
 
 const app = new Hono();
 
-app.get("/", async (c) => {
-	const users = await prisma.user.findMany({});
+app.use(logger());
 
-	return c.text("fodase");
-});
+app.route("/auth", authRoutes);
+app.route("/cvs", cvsRoutes);
+app.route("/users", userRoutes);
+
+app.get("/health", (c) => c.text("OK"));
 
 export default {
 	fetch: app.fetch,
