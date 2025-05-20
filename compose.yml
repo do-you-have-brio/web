@@ -1,0 +1,49 @@
+services:
+  api:
+    container_name: cv-api
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/db
+    volumes:
+      - .:/app
+
+  auth:
+    container_name: cv-auth
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+    ports:
+      - "4001:4001"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/db
+    volumes:
+      - .:/app
+
+  fit-ai:
+    container_name: cv-fit-ai
+    build:
+      context: .
+      dockerfile: ./apps/fit-ai/Dockerfile
+    ports:
+      - "4002:4002"
+    volumes:
+      - .:/app
+
+  db:
+    container_name: cv-db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
