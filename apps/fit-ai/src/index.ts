@@ -8,7 +8,7 @@ const app = new Hono();
 app.use(logger());
 app.use(cors());
 
-app.route("/auth", routes);
+app.route("/fit", routes);
 
 export default {
 	fetch: app.fetch,

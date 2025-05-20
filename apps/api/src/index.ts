@@ -6,8 +6,9 @@ const prisma = new PrismaClient();
 const app = new Hono();
 
 app.get("/", async (c) => {
-	const users = await prisma.user.findMany();
-	return c.text("brio");
+	const users = await prisma.user.findMany({});
+
+	return c.text("fodase");
 });
 
 export default {
