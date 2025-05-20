@@ -10,6 +10,8 @@ services:
       - db
     environment:
       DATABASE_URL: postgres://postgres:postgres@db:5432/db
+    volumes:
+      - .:/app
 
   auth:
     container_name: cv-auth
@@ -22,6 +24,8 @@ services:
       - db
     environment:
       DATABASE_URL: postgres://postgres:postgres@db:5432/db
+    volumes:
+      - .:/app
 
   fit-ai:
     container_name: cv-fit-ai
@@ -30,6 +34,8 @@ services:
       dockerfile: ./apps/fit-ai/Dockerfile
     ports:
       - "4002:4002"
+    volumes:
+      - .:/app
 
   db:
     container_name: cv-db
