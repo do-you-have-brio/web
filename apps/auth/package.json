@@ -1,15 +1,14 @@
 {
-  "name": "auth",
-  "scripts": {
-    "dev": "bun run --hot src/index.ts",
-    "test": "vitest",
-    "test:cov": "bunx vitest run --coverage"   
-    
-  },
-  "dependencies": {
-    "hono": "^4.7.9"
-  },
-  "devDependencies": {
-    "@types/bun": "latest"
-  }
+	"name": "auth",
+	"scripts": {
+		"dev": "bun run --hot src/index.ts",
+		"test": "vitest",
+		"test:cov": "bunx vitest run --coverage"
+	},
+	"dependencies": {
+		"hono": "^4.7.9"
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	}
 }
