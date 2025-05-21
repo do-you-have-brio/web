@@ -20,7 +20,7 @@ Frontend: React
 
 Backend: Node.js com microserviços
 
-Comunicação: RabbitMQ
+Comunicação: Filas.
 
 Deploy: Docker e Docker Compose
 
