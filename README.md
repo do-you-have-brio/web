@@ -38,18 +38,4 @@ RNF03 – Os serviços devem ser containerizados com Docker.
 RNF04 – A interface deve ser responsiva e acessível.
 
 ## 🔄 Modelos de Processo
-Modelo de Entrada e Fluxo:
-
-Usuário cadastra seu perfil profissional.
-
-Usuário envia a vaga desejada (descrição textual).
-
-Serviço de análise extrai os requisitos da vaga.
-
-Serviço de comparação avalia a compatibilidade com o perfil.
-
-Sistema mostra a pontuação e recomendações.
-
-Se o usuário quiser, o sistema gera um currículo personalizado.
-
-Usuário faz o download do currículo em PDF.
+Scrum
