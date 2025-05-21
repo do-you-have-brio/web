@@ -1,27 +1,44 @@
 import { describe, test, expect, vi, beforeEach } from "vitest";
 import { AuthService } from "../service"; // ajuste o caminho se necessário
 import { HTTPException } from "hono/http-exception";
+import type { PrismaClient } from "@prisma/client";
 
 // 1. Mock do Prisma
-const mockPrisma = {
+type MockedPrismaClient = {
+  user: {
+    findUnique: ReturnType<typeof vi.fn>;
+    create: ReturnType<typeof vi.fn>;
+  };
+};
+
+const mockPrisma: MockedPrismaClient = {
   user: {
     findUnique: vi.fn(),
     create: vi.fn(),
   },
 };
 
-// 2. Mock global para Bun
-(globalThis as any).Bun = {
+// 2. Declaração global para Bun (somente em testes)
+declare global {
+  var Bun: {
+    password: {
+      hash: (password: string) => Promise<string>;
+    };
+  };
+}
+
+// 3. Mock global para Bun
+globalThis.Bun = {
   password: {
     hash: vi.fn(),
   },
 };
 
+// 4. Mock do arquivo env.ts
 vi.mock('../env', () => ({
   env: {
     DATABASE_URL: 'mocked_url',
     SECRET_KEY: 'mocked_key',
-    // outros valores se precisar
   },
 }));
 
@@ -31,7 +48,7 @@ describe("AuthService - signup", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    authService = new AuthService(mockPrisma as any);
+    authService = new AuthService(mockPrisma as unknown as PrismaClient);
   });
 
   test("Deve criar usuário novo com senha hash", async () => {
@@ -43,7 +60,7 @@ describe("AuthService - signup", () => {
       email: dto.email,
       password: "hashedPassword",
     });
-    (Bun.password.hash as any).mockResolvedValue("hashedPassword");
+    vi.mocked(Bun.password.hash).mockResolvedValue("hashedPassword");
 
     const result = await authService.signup(dto);
 
