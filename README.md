@@ -15,15 +15,6 @@ Geração automática de um currículo em PDF focado nos requisitos da vaga.
 
 Interface web para interação com o sistema.
 
-Tecnologias utilizadas:
-Frontend: React
-
-Backend: Node.js com microserviços
-
-Comunicação: Filas.
-
-Deploy: Docker e Docker Compose
-
 ## 📋 Requisitos do Sistema
 Requisitos Funcionais (RF):
 
