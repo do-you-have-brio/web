@@ -1,4 +1,4 @@
 .nx
 node_modules
-
+coverage
 .env
