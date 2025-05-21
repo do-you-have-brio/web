@@ -1,4 +1,4 @@
-# Curriculum Analyzer
+8# Curriculum Analyzer
 
 ## 📌 Domínio do Projeto
 O projeto está inserido no domínio de tecnologia para processos seletivos e geração automatizada de currículos personalizados, com foco em aumentar a compatibilidade entre candidatos e vagas de emprego por meio da análise inteligente de dados.
@@ -62,6 +62,3 @@ Sistema mostra a pontuação e recomendações.
 Se o usuário quiser, o sistema gera um currículo personalizado.
 
 Usuário faz o download do currículo em PDF.
-
-![image](https://github.com/user-attachments/assets/d125fb4e-6f1a-4b43-8a22-d504ea599de6)
-
