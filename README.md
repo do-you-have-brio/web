@@ -1,4 +1,4 @@
-8# Curriculum Analyzer
+78# Curriculum Analyzer
 
 ## 📌 Domínio do Projeto
 O projeto está inserido no domínio de tecnologia para processos seletivos e geração automatizada de currículos personalizados, com foco em aumentar a compatibilidade entre candidatos e vagas de emprego por meio da análise inteligente de dados.
@@ -40,7 +40,7 @@ RF05 – O sistema deve gerar um currículo personalizado em PDF com base na vag
 Requisitos Não Funcionais (RNF):
 RNF01 – O sistema deve ser construído com arquitetura de microserviços.
 
-RNF02 – O sistema deve se comunicar de forma assíncrona usando RabbitMQ.
+RNF02 – O sistema deve se comunicar de forma assíncrona usando filas.
 
 RNF03 – Os serviços devem ser containerizados com Docker.
 
