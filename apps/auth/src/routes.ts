@@ -22,9 +22,10 @@ routes.post("/register", async (c) => {
 	return c.json(res);
 });
 
-routes.post("/verify", async (c, next) => {
-	const body = await c.req.json();
-	const { token } = verifySchema.parse(body);
+routes.get("/verify", async (c) => {
+	const [, token] = c.req.header().authorization.split(" ");
+
 	const res = await authService.verifyToken(token);
+
 	return c.json(res);
 });
