@@ -1,4 +1,4 @@
-import { Hono } from "hono";
+import { type Context, Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { env } from "./env";
@@ -10,7 +10,7 @@ app.use("*", cors());
 
 app.get("/_gateway/health", (c) => c.text("API Gateway is OK"));
 
-async function proxyRequest(c: any, targetServiceUrl: string) {
+async function proxyRequest(c: Context, targetServiceUrl: string) {
 	const url = new URL(c.req.url);
 	const targetUrl = `${targetServiceUrl}/${url.pathname.substring(c.req.routePath.length - 1)}${url.search}`;
 	// auth/login?foo=bar -> ${authurl}/login?foo=bar
