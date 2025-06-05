@@ -13,3 +13,9 @@ export const signupSchema = z.object({
 });
 
 export type SignUpDto = z.infer<typeof signupSchema>;
+
+export const verifySchema = z.object({
+	token: z.string(),
+});
+
+export type VerifyDto = z.infer<typeof verifySchema>;

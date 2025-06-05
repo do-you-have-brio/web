@@ -1,6 +1,6 @@
 import type { PrismaClient } from "@prisma/client";
 import { HTTPException } from "hono/http-exception";
-import { sign } from "hono/jwt";
+import { sign, verify } from "hono/jwt";
 import { env } from "./env";
 import type { SignInDto, SignUpDto } from "./schemas";
 
@@ -56,8 +56,16 @@ export class AuthService {
 
 		const { password, ...rest } = user;
 
-		const token = await sign({ rest }, env.JWT_SECRET);
+		const token = await sign(rest, env.JWT_SECRET);
 
 		return token;
+	}
+
+	async verifyToken(token: string) {
+		const isValid = await verify(token, env.JWT_SECRET);
+
+		console.log(isValid);
+
+		return isValid;
 	}
 }
