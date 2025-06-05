@@ -1,16 +1,19 @@
-import { Hono } from "hono";
-import { cors } from "hono/cors";
-import { logger } from "hono/logger";
-import { routes } from "./routes";
+import amqplib from "amqplib";
 
-const app = new Hono();
+(async () => {
+	const queue = "analyze";
+	const conn = await amqplib.connect("amqp://rabbit");
+	console.log("[INFO] Connected to rabbitmq");
 
-app.use(logger());
-app.use(cors());
+	const channel = await conn.createChannel();
+	await channel.assertQueue(queue);
 
-app.route("/fit", routes);
-
-export default {
-	fetch: app.fetch,
-	port: 4002,
-};
+	channel.consume(queue, (msg) => {
+		if (msg !== null) {
+			console.log("Received:", msg.content.toString());
+			channel.ack(msg);
+		} else {
+			console.log("Consumer cancelled by server");
+		}
+	});
+})();

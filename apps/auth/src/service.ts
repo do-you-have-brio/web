@@ -8,13 +8,13 @@ export class AuthService {
 	constructor(private readonly prisma: PrismaClient) {}
 
 	async signup(dto: SignInDto) {
-		const user = await this.prisma.user.findUnique({
+		const existingUser = await this.prisma.user.findUnique({
 			where: {
 				email: dto.email,
 			},
 		});
 
-		if (user) {
+		if (existingUser) {
 			throw new HTTPException(409, {
 				message: "User already exists",
 			});
@@ -22,12 +22,16 @@ export class AuthService {
 
 		const hashedPassword = await Bun.password.hash(dto.password);
 
-		return this.prisma.user.create({
+		const user = await this.prisma.user.create({
 			data: {
 				email: dto.email,
 				password: hashedPassword,
 			},
 		});
+
+		const { password, ...rest } = user;
+
+		return rest;
 	}
 
 	async signin(dto: SignUpDto) {
@@ -52,7 +56,7 @@ export class AuthService {
 
 		const { password, ...rest } = user;
 
-		const token = await sign({ rest }, env.SECRET_KEY);
+		const token = await sign({ rest }, env.JWT_SECRET);
 
 		return token;
 	}

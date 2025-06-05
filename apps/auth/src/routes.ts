@@ -1,15 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
+import { ZodError } from "zod";
 import { signinSchema, signupSchema } from "./schemas";
 import { AuthService } from "./service";
 
-export const authRoutes = new Hono();
+export const routes = new Hono();
 
 const prisma = new PrismaClient();
 const authService = new AuthService(prisma);
 
-authRoutes.post("/signin", async (c) => {
+routes.post("/login", async (c) => {
 	try {
 		const { email, password } = signinSchema.parse(await c.req.json());
 
@@ -17,15 +18,21 @@ authRoutes.post("/signin", async (c) => {
 
 		return c.json({ token: res });
 	} catch (err) {
+		console.error(err);
+
 		if (err instanceof HTTPException) {
 			return err.getResponse();
+		}
+
+		if (err instanceof ZodError) {
+			return c.json({ message: err }, 400);
 		}
 
 		return c.json({ message: err }, 500);
 	}
 });
 
-authRoutes.post("/signup", async (c) => {
+routes.post("/register", async (c) => {
 	try {
 		const { email, password } = signupSchema.parse(await c.req.json());
 		const res = await authService.signup({ email, password });
@@ -35,5 +42,22 @@ authRoutes.post("/signup", async (c) => {
 			// Get the custom response
 			return err.getResponse();
 		}
+
+		return c.json({ message: err }, 500);
+	}
+});
+
+routes.post("/verify-token", async (c) => {
+	try {
+		const { email, password } = signupSchema.parse(await c.req.json());
+		const res = await authService.signup({ email, password });
+		return c.json(res);
+	} catch (err) {
+		if (err instanceof HTTPException) {
+			// Get the custom response
+			return err.getResponse();
+		}
+
+		return c.json({ message: err }, 500);
 	}
 });

@@ -1,14 +1,22 @@
 {
 	"name": "fit-ai",
+	"module": "src/index.ts",
+	"type": "module",
+	"private": true,
 	"scripts": {
 		"dev": "bun run --hot src/index.ts",
 		"lint": "biome check . --write"
 	},
 	"dependencies": {
 		"@google/genai": "^0.14.1",
+		"amqplib": "^0.10.8",
 		"hono": "^4.7.9"
 	},
 	"devDependencies": {
+		"@types/amqplib": "^0.10.7",
 		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
 	}
 }
